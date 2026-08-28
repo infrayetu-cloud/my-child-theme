@@ -1,6 +1,6 @@
 (function () {
   const CONFIG = {
-    API_BASE: "http://127.0.0.1:8080/api/v1",
+    API_BASE: "http://api.markiti.co.ke/api/v1",
     ENDPOINTS: {
       warehouses: "/public/warehouse",
       types: "/public/producttype",
