@@ -16,5 +16,5 @@ jobs:
           username: ${{ secrets.SFTP_USERNAME }}
           password: ${{ secrets.SFTP_PASSWORD }}
           port: 21
-          local-dir: ./
+          local-dir: ./site-custom-js/
           server-dir: /site-custom-js/
