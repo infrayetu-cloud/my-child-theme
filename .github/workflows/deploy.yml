@@ -17,4 +17,4 @@ jobs:
           password: ${{ secrets.SFTP_PASSWORD }}
           port: 21
           local-dir: ./
-          server-dir: /wp-content/plugins/site-custom-js/
+          server-dir: /site-custom-js/
