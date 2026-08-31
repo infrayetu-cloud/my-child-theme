@@ -183,7 +183,7 @@
     top:-28px;
     left:50%;
     transform:translateX(-50%);
-   background:#6a0dad;   
+   background: #5f0c9a;
     color:#fff;
     font-size:12px;
     font-weight:600;
