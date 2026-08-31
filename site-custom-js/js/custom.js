@@ -1308,7 +1308,7 @@
 
   // -------------- DOM CREATION --------------
   const root = el("div", { class: "fw-root" });
-  const btn = el("button", { class: "fw-btn", title: "Open Markiti - Bot", "aria-label": "Open ordering panel" });
+  const btn = el("button", { class: "fw-btn", title: "n Markiti - Bot", "aria-label": "n ordering panel" });
   const btnIcon = el("span", { class: "fw-btn-icon" }, icons.cart);
   btn.appendChild(btnIcon);
 
