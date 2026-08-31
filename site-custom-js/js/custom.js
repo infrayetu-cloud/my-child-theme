@@ -1,6 +1,6 @@
 (function () {
   const CONFIG = {
-    API_BASE: "http://api.markiti.co.ke/api/v1",
+    API_BASE: "https://api.markiti.laheri.co.ke/api/v1",
     ENDPOINTS: {
       warehouses: "/public/warehouse",
       types: "/public/producttype",
@@ -9,7 +9,7 @@
       stkPush: "/public/order/{orderId}/stk",
       agentLookup: "/public/organisation/lookup",
     },
-    TITLE: "Markiti Bot",
+    TITLE: "Markiti Express",
     TAGLINE: "Keep it Cool. Deliver While Still Fresh!",
     LOGO_URL:
       "https://portal.markiti.laheri.co.ke/static/media/new_logo_colored2.a5355583.png",
@@ -168,7 +168,48 @@
   const css = `
 .fw-root{position:fixed;right:20px;bottom:20px;z-index:99999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
 .fw-btn{width:70px;height:70px;border-radius:50%;background:#5142A6;color:#fff;display:flex;align-items:center;justify-content:center;position:fixed;right:20px;bottom:20px;cursor:pointer;border:3px solid #fff;box-shadow:0 12px 30px rgba(81,66,166,0.28),0 6px 18px rgba(0,0,0,0.18);transition:transform 320ms cubic-bezier(.2,.9,.3,1),box-shadow 320ms cubic-bezier(.2,.9,.3,1);animation:float 3s ease-in-out infinite;z-index:99999;}
-.fw-btn-icon{font-size:32px;line-height:1;display:inline-block;transform-origin:center center;}
+.fw-btn{
+    position:relative;      /* anchor for the floating label */
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    background:transparent;
+    border:none;
+    cursor:pointer;
+}
+
+.fw-btn-label{
+    position:absolute;
+    top:-28px;
+    left:50%;
+    transform:translateX(-50%);
+   background: #5f0c9a;
+    color:#fff;
+    font-size:12px;
+    font-weight:600;
+    padding:4px 10px;
+    border-radius:12px;
+    white-space:nowrap;
+    box-shadow:0 2px 6px rgba(12, 12, 12, 0.15);
+}
+.fw-btn-icon {
+    width: 66px;
+    height: 66px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 50%;
+}
+
+.fw-btn-icon img {
+    width: 115%;
+    height: 115%;
+    max-width: none;
+    max-height: none;
+    object-fit: contain;
+    display: block;
+}
 .fw-btn:hover{transform:translateY(-8px) scale(1.15) rotate(-6deg);box-shadow:0 30px 80px rgba(81,66,166,0.36),0 12px 30px rgba(16,189,183,0.12);}
 .fw-btn:active{transform:translateY(-2px) scale(0.98);transition:transform 120ms ease;}
 .fw-btn::before{content:"";position:absolute;left:50%;top:50%;width:70px;height:70px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(81,66,166,0.08);z-index:-1;animation:pulse-ring 2.4s infinite cubic-bezier(.4,0,.2,1);}
@@ -1186,9 +1227,6 @@
     S.customer.phone = phone;
     S.customer.name = name;
     S.customer.isGuest = !phone && !name && !S.customer.matchedOrganisationId;
-    if (S.customer.isGuest) {
-      toast("Continuing as guest — order updates will be limited without a phone number.", "info");
-    }
     S.step = "warehouses";
     render();
   }
@@ -1247,7 +1285,7 @@
         phone_number: S.customer.phone || undefined,
         warehouse_id: S.cart[0].warehouse.id,
         self_collect: isCollection,
-        order_source: "ordering_bot",
+        order_source: "markiti_express",
         agent_id: S.customer.matchedOrganisationId || undefined,
       };
       if (!isCollection) {
@@ -1308,10 +1346,20 @@
 
   // -------------- DOM CREATION --------------
   const root = el("div", { class: "fw-root" });
-  const btn = el("button", { class: "fw-btn", title: "Open Markiti - Bot", "aria-label": "Open ordering panel" });
-  const btnIcon = el("span", { class: "fw-btn-icon" }, icons.cart);
-  btn.appendChild(btnIcon);
+  const btn = el("button", { class: "fw-btn", title: "Open Markiti Express", "aria-label": "n ordering panel" });
 
+  const btnLabel = el("span", { class: "fw-btn-label" }, "Order Now");
+
+  const btnIcon = el("span", { class: "fw-btn-icon" });
+
+  const btnLogo = el("img", {
+    src: "images/KIC-BOT.png",
+    alt: "KIC Bot"
+  });
+
+  btnIcon.appendChild(btnLogo);
+  btn.appendChild(btnLabel);
+  btn.appendChild(btnIcon);
   const panel = el("div", { class: "fw-panel" });
   const head = el("div", { class: "fw-head" });
   const logo = el("div", { class: "fw-logo" });
