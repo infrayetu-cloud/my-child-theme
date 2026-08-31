@@ -1,11 +1,11 @@
 (function () {
   const CONFIG = {
-    API_BASE: "https://api.markiti.laheri.co.ke/api/v1",
+    API_BASE: "https://api.markiti.co.ke/api/v1",
     ENDPOINTS: {
       warehouses: "/public/warehouse",
       types: "/public/producttype",
       products: "/public/product",
-      placeOrder: "/public/order",
+      placeOrder: "/public/markitiexpress/order",
       stkPush: "/public/order/{orderId}/stk",
       agentLookup: "/public/organisation/lookup",
     },
@@ -169,52 +169,80 @@
 .fw-root{position:fixed;right:20px;bottom:20px;z-index:99999;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;}
 .fw-btn{width:70px;height:70px;border-radius:50%;background:#5142A6;color:#fff;display:flex;align-items:center;justify-content:center;position:fixed;right:20px;bottom:20px;cursor:pointer;border:3px solid #fff;box-shadow:0 12px 30px rgba(81,66,166,0.28),0 6px 18px rgba(0,0,0,0.18);transition:transform 320ms cubic-bezier(.2,.9,.3,1),box-shadow 320ms cubic-bezier(.2,.9,.3,1);animation:float 3s ease-in-out infinite;z-index:99999;}
 .fw-btn{
-    position:relative;      /* anchor for the floating label */
+    position:relative;
     display:flex;
     flex-direction:column;
     align-items:center;
     background:transparent;
     border:none;
     cursor:pointer;
+    z-index:99999;
+    animation:float 3s ease-in-out infinite;
 }
 
 .fw-btn-label{
     position:absolute;
-    top:-28px;
+    top:-30px;
     left:50%;
     transform:translateX(-50%);
-   background: #5f0c9a;
+    background:linear-gradient(135deg, ${CONFIG.SECONDARY_COLOR}, ${CONFIG.PRIMARY_COLOR});
     color:#fff;
     font-size:12px;
-    font-weight:600;
-    padding:4px 10px;
-    border-radius:12px;
+    font-weight:700;
+    letter-spacing:0.3px;
+    padding:7px 18px;
+    border-radius:10px;
     white-space:nowrap;
-    box-shadow:0 2px 6px rgba(12, 12, 12, 0.15);
+    box-shadow:0 6px 16px rgba(107,70,193,0.4);
+    animation:fw-label-pop 2.4s ease-in-out infinite;
 }
-.fw-btn-icon {
-    width: 66px;
-    height: 66px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 50%;
+.fw-btn-icon{
+    width:70px;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    border-radius:50%;
+    border:3px solid transparent;
+    background:
+        linear-gradient(#fff,#fff) padding-box,
+        linear-gradient(135deg, ${CONFIG.PRIMARY_COLOR}, ${CONFIG.SECONDARY_COLOR}) border-box;
+    box-shadow:0 10px 28px rgba(81,66,166,0.35);
+    animation:fw-glow-pulse 2.6s ease-in-out infinite;
+    transition:transform 300ms cubic-bezier(.2,.9,.3,1);
 }
 
 .fw-btn-icon img {
-    width: 115%;
-    height: 115%;
+    width: 112%;
+    height: 112%;
     max-width: none;
     max-height: none;
     object-fit: contain;
     display: block;
 }
-.fw-btn:hover{transform:translateY(-8px) scale(1.15) rotate(-6deg);box-shadow:0 30px 80px rgba(81,66,166,0.36),0 12px 30px rgba(16,189,183,0.12);}
-.fw-btn:active{transform:translateY(-2px) scale(0.98);transition:transform 120ms ease;}
+
+.fw-btn:hover .fw-btn-icon{
+    transform:scale(1.12) rotate(-4deg);
+    box-shadow:0 16px 40px rgba(81,66,166,0.45);
+}
+
+.fw-btn:active .fw-btn-icon{
+    transform:scale(0.96);
+}
 .fw-btn::before{content:"";position:absolute;left:50%;top:50%;width:70px;height:70px;border-radius:50%;transform:translate(-50%,-50%);background:rgba(81,66,166,0.08);z-index:-1;animation:pulse-ring 2.4s infinite cubic-bezier(.4,0,.2,1);}
 @keyframes pulse-ring{0%{transform:translate(-50%,-50%) scale(0.9);opacity:0.6;}50%{transform:translate(-50%,-50%) scale(1.05);opacity:0.18;}100%{transform:translate(-50%,-50%) scale(1.3);opacity:0;}}
 @keyframes float{0%,100%{transform:translateY(0px);}50%{transform:translateY(-10px);}}
+
+@keyframes fw-glow-pulse{
+    0%,100%{ box-shadow:0 10px 28px rgba(81,66,166,0.35), 0 0 0 0 rgba(27,181,166,0.35); }
+    50%{ box-shadow:0 14px 36px rgba(81,66,166,0.45), 0 0 0 10px rgba(27,181,166,0); }
+}
+
+@keyframes fw-label-pop{
+    0%,100%{ transform:translateX(-50%) scale(1); }
+    50%{ transform:translateX(-50%) scale(1.05); }
+}
 .fw-panel{position:fixed;right:20px;bottom:20px;width:${CONFIG.WIDGET_WIDTH}px;height:${CONFIG.WIDGET_HEIGHT}px;background:#fff;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,0.15);overflow:hidden;display:flex;flex-direction:column;transform:translateY(20px);opacity:0;transition:all 0.3s cubic-bezier(0.4,0,0.2,1);display:none;}
 .fw-panel.show{transform:translateY(0);opacity:1;}
 .fw-head{padding:20px;background:linear-gradient(135deg,${CONFIG.PRIMARY_COLOR},${CONFIG.SECONDARY_COLOR});color:#fff;display:flex;align-items:center;box-shadow:0 4px 20px rgba(27,181,166,0.3);}
